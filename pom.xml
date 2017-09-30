@@ -44,9 +44,19 @@
 
   <issueManagement></issueManagement>
 
+  <distributionManagement>
+
+    <repository>
+      <id>docker-local-nexus</id>
+      <url>http://localhost:8081/repository/nexus-local/</url>
+    </repository>
+  </distributionManagement>
+
   <scm>
+    <url>https://github.com/morinb/morinb-maven-project-archetype</url>
     <connection>scm:git:https://github.com/morinb/morinb-maven-project-archetype.git</connection>
     <developerConnection>scm:git:https://github.com/morinb/morinb-maven-project-archetype.git</developerConnection>
+    <tag>HEAD</tag>
   </scm>
 
   <licenses>
