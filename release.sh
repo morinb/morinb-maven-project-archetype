@@ -9,14 +9,23 @@
 
 # Based on the excellent information found here: http://vincent.demeester.fr/2012/07/maven-release-gitflow/
 
-#Exits if a command doesn't exit with 0.
-set -e
-
 # CHANGE THESE BEFORE RUNNING THE SCRIPT!
 # The version to be released
-releaseVersion=0.0.3
+releaseVersion=
+
+if [ -z ${releaseVersion} ]; then
+    echo -n "Please define release branch: "
+    read releaseVersion
+fi
+
 # The next development version
-developmentVersion=0.0.4-SNAPSHOT
+#developmentVersion=
+#
+#if [ -z ${developmentVersion} ]; then
+#    echo -n "Please define developmentVersion : "
+#    read developmentVersion
+#fi
+
 # Provide an optional comment prefix, e.g. for your bug tracking system
 scmCommentPrefix=
 
@@ -24,7 +33,8 @@ scmCommentPrefix=
 git checkout -b release/${releaseVersion} develop
 
 # The Maven release
-mvn --batch-mode release:prepare release:perform -DscmCommentPrefix="$scmCommentPrefix" -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${developmentVersion}
+mvn release:prepare release:perform -DscmCommentPrefix="$scmCommentPrefix"
+#-DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${developmentVersion}
 
 # Clean up and finish
 # get back to the develop branch

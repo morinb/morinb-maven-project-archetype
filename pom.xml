@@ -21,7 +21,7 @@
 
   <groupId>com.github.morinb</groupId>
   <artifactId>morinb-maven-project-archetype</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 
   <inceptionYear>2017</inceptionYear>
 
@@ -84,7 +84,7 @@
     <url>https://github.com/morinb/morinb-maven-project-archetype</url>
     <connection>scm:git:https://github.com/morinb/morinb-maven-project-archetype.git</connection>
     <developerConnection>scm:git:https://github.com/morinb/morinb-maven-project-archetype.git</developerConnection>
-    <tag>v0.0.3</tag>
+    <tag>v0.0.4</tag>
   </scm>
 
   <licenses>
