@@ -25,19 +25,29 @@
   <artifactId>morinb-maven-project-archetype</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
+  <inceptionYear>2017</inceptionYear>
 
   <developers>
     <developer>
       <id>morinb</id>
       <name>Baptiste MORIN</name>
       <timezone>Europe/Paris</timezone>
+      <roles>
+        <role>architect</role>
+        <role>developer</role>
+      </roles>
     </developer>
   </developers>
+
+  <contributors>
+  </contributors>
+
+  <issueManagement></issueManagement>
 
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
-      <url>./LICENSE</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
     </license>
   </licenses>
 

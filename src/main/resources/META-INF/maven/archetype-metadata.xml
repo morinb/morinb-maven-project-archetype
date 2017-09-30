@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~    Copyright 2017 Baptiste MORIN
   ~
@@ -17,14 +16,15 @@
   -->
 
 <archetype-descriptor xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
-                      name="basic">
+                      name="morinb-maven-project-archetype">
 
   <requiredProperties>
     <requiredProperty key="project-name">
-      <defaultValue>Default Project</defaultValue>
+      <defaultValue>DefaultProject</defaultValue>
     </requiredProperty>
 
   </requiredProperties>
+
 
   <fileSets>
     <fileSet filtered="true">
