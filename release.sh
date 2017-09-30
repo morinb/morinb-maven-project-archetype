@@ -9,11 +9,14 @@
 
 # Based on the excellent information found here: http://vincent.demeester.fr/2012/07/maven-release-gitflow/
 
+#Exits if a command doesn't exit with 0.
+set -e
+
 # CHANGE THESE BEFORE RUNNING THE SCRIPT!
 # The version to be released
-releaseVersion=0.0.2
+releaseVersion=0.0.3
 # The next development version
-developmentVersion=0.0.3-SNAPSHOT
+developmentVersion=0.0.4-SNAPSHOT
 # Provide an optional comment prefix, e.g. for your bug tracking system
 scmCommentPrefix=
 
