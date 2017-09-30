@@ -14,9 +14,9 @@ set -e
 
 # CHANGE THESE BEFORE RUNNING THE SCRIPT!
 # The version to be released
-releaseVersion=0.0.2
+releaseVersion=0.0.3
 # The next development version
-developmentVersion=0.0.3-SNAPSHOT
+developmentVersion=0.0.4-SNAPSHOT
 # Provide an optional comment prefix, e.g. for your bug tracking system
 scmCommentPrefix=
 
