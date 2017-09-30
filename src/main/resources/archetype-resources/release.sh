@@ -11,9 +11,21 @@
 
 # CHANGE THESE BEFORE RUNNING THE SCRIPT!
 # The version to be released
-releaseVersion=0.0.2
+releaseVersion=
+
+if [ -z ${releaseVersion} ]; then
+    echo -n "Please define releaseVersion : "
+    read releaseVersion
+fi
+
 # The next development version
-developmentVersion=0.0.3-SNAPSHOT
+developmentVersion=
+
+if [ -z ${developmentVersion} ]; then
+    echo -n "Please define developmentVersion : "
+    read developmentVersion
+fi
+
 # Provide an optional comment prefix, e.g. for your bug tracking system
 scmCommentPrefix=
 
