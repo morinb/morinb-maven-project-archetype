@@ -44,6 +44,11 @@
 
   <issueManagement></issueManagement>
 
+  <scm>
+    <connection>scm:git:https://github.com/morinb/morinb-maven-project-archetype.git</connection>
+    <developerConnection>scm:git:https://github.com/morinb/morinb-maven-project-archetype.git</developerConnection>
+  </scm>
+
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
