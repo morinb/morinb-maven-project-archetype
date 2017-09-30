@@ -21,7 +21,7 @@
 
   <groupId>com.github.morinb</groupId>
   <artifactId>morinb-maven-project-archetype</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>0.0.5-SNAPSHOT</version>
 
   <inceptionYear>2017</inceptionYear>
 
