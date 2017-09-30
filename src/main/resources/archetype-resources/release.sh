@@ -14,17 +14,10 @@
 releaseVersion=
 
 if [ -z ${releaseVersion} ]; then
-    echo -n "Please define releaseVersion : "
+    echo -n "Please define release branch: "
     read releaseVersion
 fi
 
-# The next development version
-developmentVersion=
-
-if [ -z ${developmentVersion} ]; then
-    echo -n "Please define developmentVersion : "
-    read developmentVersion
-fi
 
 # Provide an optional comment prefix, e.g. for your bug tracking system
 scmCommentPrefix=
@@ -33,7 +26,7 @@ scmCommentPrefix=
 git checkout -b release/${releaseVersion} develop
 
 # The Maven release
-mvn --batch-mode release:prepare release:perform -DscmCommentPrefix="$scmCommentPrefix" -DreleaseVersion=${releaseVersion} -DdevelopmentVersion=${developmentVersion}
+mvn release:prepare release:perform -DscmCommentPrefix="$scmCommentPrefix"
 
 # Clean up and finish
 # get back to the develop branch
