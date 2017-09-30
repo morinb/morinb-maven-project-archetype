@@ -11,9 +11,9 @@
 
 # CHANGE THESE BEFORE RUNNING THE SCRIPT!
 # The version to be released
-releaseVersion=0.0.1
+releaseVersion=0.0.2
 # The next development version
-developmentVersion=0.0.2-SNAPSHOT
+developmentVersion=0.0.3-SNAPSHOT
 # Provide an optional comment prefix, e.g. for your bug tracking system
 scmCommentPrefix=
 
