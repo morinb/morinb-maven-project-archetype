@@ -1,46 +1,78 @@
-#!/bin/bash
+#! /bin/bash
+# 1/ create release branch
+DIR=$1
 
-# THe issue is that the Maven Release Plugin insists on creating a tag, and git-flow also wants to create a tag.
-# Secondly, the Maven Release Plugin updates the version number to the next SNAPSHOT release before you can
-# merge the changes into master, so you end with the SNAPSHOT version number in master, and this is highly undesired.
-# This script solves this by doing changes locally, only pushing at the end.
-# All git commands are fully automated, without requiring any user input.
-# See the required configuration options for the Maven Release Plugin to avoid unwanted pushs.
-
-# Based on the excellent information found here: http://vincent.demeester.fr/2012/07/maven-release-gitflow/
-
-# CHANGE THESE BEFORE RUNNING THE SCRIPT!
-# The version to be released
-releaseVersion=
-
-if [ -z ${releaseVersion} ]; then
-    echo -n "Please define release branch: "
-    read releaseVersion
+if [ -d "$DIR" ]
+then
+	cd $DIR
+else 
+	echo "$DIR is not a valid directory"
+	exit 3
 fi
 
+DEVELOP_BRANCH=$(git config gitflow.branch.develop)
+MASTER_BRANCH=$(git config gitflow.branch.master)
 
-# Provide an optional comment prefix, e.g. for your bug tracking system
-scmCommentPrefix=
+nextReleaseVersion=
+nextSnapshotVersion=
 
-# Start the release by creating a new release branch
-git checkout -b release/${releaseVersion} develop
+currentPomVersion=$(mvn org.apache.maven.plugins:maven-help-plugin:evaluate -Dexpression=project.version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ {p; q } }')
+guessedCurrentVersion=${currentPomVersion//-SNAPSHOT}
 
-# The Maven release
-mvn release:prepare release:perform -DscmCommentPrefix="$scmCommentPrefix"
+set -e
 
-# Clean up and finish
-# get back to the develop branch
-git checkout develop
+if [ -z ${nextReleaseVersion} ]
+then
+	echo -n "Please specifify next release version [${guessedCurrentVersion}]: "
+	read nextReleaseVersion
+fi
 
-# merge the version back into develop
-git merge --no-ff -m "$scmCommentPrefix Merge release/$releaseVersion into develop" release/${releaseVersion}
-# go to the master branch
-git checkout master
-# merge the version back into master but use the tagged version instead of the release/$releaseVersion HEAD
-git merge --no-ff -m "$scmCommentPrefix Merge previous version into master to avoid the increased version number" release/${releaseVersion}~1
-# Removing the release branch
-git branch -D release/${releaseVersion}
-# Get back on the develop branch
-git checkout develop
-# Finally push everything
-git push --all && git push --tags
+if [ -z ${nextReleaseVersion} ]
+then
+	nextReleaseVersion=${guessedCurrentVersion}
+fi
+
+git flow release start ${nextReleaseVersion}
+
+# 2/ check branch is clean
+
+if [ -n "$(git status --porcelain)" ]
+then
+	echo -n "Branch is not clean, please commit or stash tour changes !"
+	exit 1
+fi
+
+# 3/ upgrade pom version
+
+mvn versions:set -DnewVersion=${nextReleaseVersion}
+
+# 4/ test version
+
+mvn test verify
+
+if [ $? -ne 0 ] 
+then
+	echo -n "Tests have failed. Stopping !"
+	exit 2
+fi
+
+# 5/ validate pom
+
+mvn versions:commit
+
+git add pom.xml
+git commit -m "[Release] Update pom version to ${nextReleaseVersion}"
+
+# 6/ finish release
+
+git flow release finish ${nextReleaseVersion}
+
+# 7/ Upgrade pom for next snapshot
+mvn release:update-versions -DautoVersionSubmodules=true
+git add pom.xml
+git commit -m "[Release] Update pom for next version"
+
+#8 / Cleaning
+mvn clean
+
+git co ${MASTER_BRANCH} && git push && git co ${DEVELOP_BRANCH} && git push && git push --tags
